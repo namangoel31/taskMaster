@@ -2,6 +2,8 @@ package com.airtribe.taskMaster.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class Users {
     @Id
@@ -15,6 +17,17 @@ public class Users {
     private String role;
 
     private boolean isEnabled;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Attachment> attachments;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Comment> comments;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tasks;
+
+
 
     public Users(Long userId, String username, String password, String role, boolean isEnabled) {
         this.userId = userId;

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 public class Project {
@@ -16,15 +17,46 @@ public class Project {
 
     private ArrayList<Users> users;
 
-    @ManyToOne
-    @JoinColumn(name = "task_id")
-    private Task task;
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Task> task;
 
-    public Task getTask() {
+    public Project(long id, String name, ArrayList<Users> users) {
+        this.id = id;
+        this.name = name;
+        this.users = users;
+    }
+
+    public Project() {}
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public ArrayList<Users> getUsers() {
+        return users;
+    }
+
+    public void setUsers(ArrayList<Users> users) {
+        this.users = users;
+    }
+
+    public List<Task> getTask() {
         return task;
     }
 
-    public void setTask(Task task) {
+    public void setTask(List<Task> task) {
         this.task = task;
     }
 }
